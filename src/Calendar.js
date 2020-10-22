@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-
+import { 
+    CalenderWrapper, 
+    CalenderContainer, 
+    Day,
+    DayHeader,
+    PagingButton
+    } from './CalendarComponent';
 
 export class Calender extends Component {
     
@@ -28,15 +34,15 @@ export class Calender extends Component {
         const today = moment();
       
         for (let w=0; w<firstWeekday; w++) {
-          calendarDays.push(<div key={Math.random()}/>); // empty days
+          calendarDays.push(<Day key={Math.random()}/>); // empty days
         }
       
         for (let d=1; d<lastDate; d++) {
-          calendarDays.push(<div key={d} today={ true ? date.date(d).isSame(today, 'day').toString() : false}>{d}</div>);
+          calendarDays.push(<Day key={d} today={ true ? date.date(d).isSame(today, 'day').toString() : false}>{d}</Day>);
         }
       
         while (calendarDays.length % 7 !== 0) {
-          calendarDays.push(<div key={Math.random()}/>);
+          calendarDays.push(<Day key={Math.random()}/>);
         }
       
         return calendarDays;
@@ -45,23 +51,23 @@ export class Calender extends Component {
 
     render() {
         return (
-            <div>
+            <CalenderWrapper>
                 <h2>{this.state.date.format('MMMM YYYY')}</h2>
                 <div>
-                    <button onClick={this.prevMonth.bind(this)} > &lt; </button>
-                    <button onClick={this.nextMonth.bind(this)} > &gt; </button>
+                    <PagingButton onClick={this.prevMonth.bind(this)} > &lt; </PagingButton>
+                    <PagingButton onClick={this.nextMonth.bind(this)} > &gt; </PagingButton>
                 </div>
-                <div>
-                    <div>Sunday</div>
-                    <div>Monday</div>
-                    <div>Thusday</div>
-                    <div>Wednesday</div>
-                    <div>Thursday</div>
-                    <div>Friday</div>
-                    <div>Saturday</div>
+                <CalenderContainer>
+                    <DayHeader>Sunday</DayHeader>
+                    <DayHeader>Monday</DayHeader>
+                    <DayHeader>Thusday</DayHeader>
+                    <DayHeader>Wednesday</DayHeader>
+                    <DayHeader>Thursday</DayHeader>
+                    <DayHeader>Friday</DayHeader>
+                    <DayHeader>Saturday</DayHeader>
                     {this.createDaysOfMonth(this.state.date)}
-                </div>
-            </div>
+                </CalenderContainer>
+            </CalenderWrapper>
         )
     }
 };
