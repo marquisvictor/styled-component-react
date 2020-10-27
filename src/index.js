@@ -1,14 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {
+  PrimaryButton,
+  SecondaryButton,
+  TertiaryButton,
+} from './components/Buttons'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const App = () => {
+  return (
+    <div>
+      <PrimaryButton>Hello World!</PrimaryButton>
+      <SecondaryButton>Hello World!</SecondaryButton>
+      <TertiaryButton>Hello World!</TertiaryButton>
+    </div>
+  )
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+ReactDOM.render(<App />, document.getElementById('root'))
