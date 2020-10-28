@@ -32,3 +32,5 @@ export const neutral = {
     500: '#4a4b53',
     600: '#000000',
 };
+
+export const darkMode = '#2b332e';
