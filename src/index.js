@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { PrimaryButton, SecondaryButton, TertiaryButton } from './components';
+import {
+    PrimaryButton,
+    SecondaryButton,
+    TertiaryButton,
+    SignUpModal,
+} from './components';
 import { GlobalStyle, darkTheme, defaultTheme } from './utils';
 import { ThemeProvider } from 'styled-components';
 
@@ -65,6 +70,7 @@ const App = () => {
                     What's up World!
                 </TertiaryButton>
                 <GlobalStyle />
+                <SignUpModal />
             </div>
         </ThemeProvider>
     );
