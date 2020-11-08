@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import Tab from './Tab';
 
 class Tabs extends Component {
+    static propTypes = {
+        children: PropTypes.instanceOf(Array).isRequired,
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +27,7 @@ class Tabs extends Component {
         } = this; // JavaScript es6 distructuring syntax for everything in "this"
 
         return (
-            <div className='tabs'>
+            <div>
                 <ol className='tab-list'>
                     {children.map(child => {
                         const { label } = child.props;
