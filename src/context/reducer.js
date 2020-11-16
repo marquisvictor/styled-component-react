@@ -1,5 +1,3 @@
-import React, { useReducer } from 'react';
-
 let user = localStorage.getItem('currentUser')
     ? JSON.parse(localStorage.getItem('currentUser')).user
     : '';
@@ -22,25 +20,25 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 
 export const AuthReducer = (initialState, action) => {
     switch (action.type) {
-        case 'REQUEST_LOGIN':
+        case REQUEST_LOGIN:
             return {
                 ...initialState,
                 loading: true,
             };
-        case 'LOGIN_SUCCESS':
+        case LOGIN_SUCCESS:
             return {
                 ...initialState,
                 loading: false,
                 user: action.payload.user,
                 token: action.payload.auth_token,
             };
-        case 'LOGOUT':
+        case LOGOUT:
             return {
                 ...initialState,
                 user: '',
                 token: '',
             };
-        case 'LOGIN_ERROR':
+        case LOGIN_ERROR:
             return {
                 ...initialState,
                 loading: false,

@@ -5,16 +5,19 @@ import PageNotFound from '../pages/PageNotFound';
 
 const routes = [
     {
-        path: '/',
+        path: '/login',
         component: Login,
+        isPrivate: false,
     },
     {
         path: '/dashboard',
         component: Dashboard,
+        isPrivate: true,
     },
     {
         path: '/*',
         component: PageNotFound,
+        isPrivate: true,
     },
 ];
 
