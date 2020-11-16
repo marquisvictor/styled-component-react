@@ -1,6 +1,4 @@
 // Config routes
-
-import React from 'react';
 import Login from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
 import PageNotFound from '../pages/PageNotFound';
@@ -15,7 +13,7 @@ const routes = [
         component: Dashboard,
     },
     {
-        path: '/pageNotFound',
+        path: '/*',
         component: PageNotFound,
     },
 ];
