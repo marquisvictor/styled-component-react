@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import { render, screen, waitForElementToBeRemoved } from './custom-render';
+import { render, screen, waitForElementToBeRemoved } from '../custom-render';
 import { TodoList } from '../TodoList';
-import { todos } from '../makeTodos';
+import { todos } from '../makeTodo';
+import '@testing-library/jest-dom/extend-expect';
 
 describe('<App />', () => {
     it('Renders <TodoList /> component', async () => {

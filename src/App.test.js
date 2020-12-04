@@ -1,10 +1,16 @@
-// use describe, it pattern
+import React from 'react';
+import { render, screen, waitForElementToBeRemoved } from './custom-render';
+import App from './App';
+import '@testing-library/jest-dom/extend-expect';
 
 describe('<App />', () => {
-    it('Renders <App /> component correctly', () => {
-        const { getByText } = render(<App />);
+    it('Renders <App /> component correctly', async () => {
+        render(<App />);
         expect(
-            getByText(/Getting started with React testing library/i),
+            screen.getByText(/Getting started with React testing library/i),
         ).toBeInTheDocument();
+        await waitForElementToBeRemoved(() =>
+            screen.getByText(/Fetching todos/i),
+        );
     });
 });
