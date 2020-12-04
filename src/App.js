@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { TodoList } from './TodoList';
+import TestHook from './TestHook';
+import Basic from './Basic';
+import './App.css';
 
-const App = () => {
+const App = props => {
+    const [state, setState] = useState('some text');
+    const [name, setName] = useState('Moe');
+
+    const changeName = () => {
+        setName('steve');
+    };
+
     return (
-        <div className='App-body'>
-            <header className='App-header'>
-                <h2>Getting started with React testing library</h2>
-            </header>
-            <BrowserRouter>
-                <Route exact path='/' component={TodoList} />
-            </BrowserRouter>
+        <div className='App'>
+            <Basic />
+            <h1> Basic Hook useState</h1>
+            <TestHook name={name} changeName={changeName} />
         </div>
     );
 };
