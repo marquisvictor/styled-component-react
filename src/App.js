@@ -1,12 +1,24 @@
 import React from 'react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+} from 'react-router-dom';
+import DashboardPage from './pages/DashboardPage';
+import PostsPage from './pages/PostsPage';
 
-import './App.css';
+import './index.css';
 
 const App = props => {
     return (
-        <div className='App'>
-            <h1> Self Learning Redux </h1>
-        </div>
+        <Router>
+            <Switch>
+                <Route path='/' component={DashboardPage} />
+                <Route path='/posts' component={PostsPage} />
+                <Redirect to='/' />
+            </Switch>
+        </Router>
     );
 };
 
