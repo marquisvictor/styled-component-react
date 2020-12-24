@@ -14,8 +14,8 @@ const App = props => {
     return (
         <Router>
             <Switch>
-                <Route path='/' component={DashboardPage} />
-                <Route path='/posts' component={PostsPage} />
+                <Route path='/' exact component={DashboardPage} />
+                <Route path='/posts' exact component={PostsPage} />
                 <Redirect to='/' />
             </Switch>
         </Router>

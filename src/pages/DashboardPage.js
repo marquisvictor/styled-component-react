@@ -7,7 +7,7 @@ const DashboardPage = () => (
         <p>This is the dashboard.</p>
 
         <Link to='/posts' className='button'>
-            View Posts
+            View Posts here
         </Link>
     </section>
 );

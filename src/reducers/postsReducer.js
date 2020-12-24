@@ -8,6 +8,7 @@ export const initialState = {
 
 export default function postsReducer(state = initialState, action) {
     const { type } = action;
+    // console.log(actions);
     switch (type) {
         case actions.GET_POSTS:
             return {
@@ -19,7 +20,7 @@ export default function postsReducer(state = initialState, action) {
                 // ...state,
                 posts: action.payload,
                 loading: false,
-                // hasErrors: false,
+                hasErrors: false,
             };
 
         case actions.GET_POST_FAILURE:
