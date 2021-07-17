@@ -1,43 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import State from './State';
-import Effect from './Effect';
-// import Context from "./Context";
-// import Ref from "./Ref";
-// import Reducer from "./Reducer";
-// import Memo from "./Memo";
-// import Callback from "./Callback";
-// import LayoutEffect from "./LayoutEffect";
-// import ImperativeHandle from "./ImperativeHandle";
-// import DebugValue from "./DebugValue";
-
 import './index.css';
+import App from './App';
 
-function App() {
-    return (
-        <div className='App'>
-            <State />
-            <hr />
-            <Effect />
-            <hr />
-            {/* <Context />
-            <hr />
-            <Ref />
-            <hr />
-            <Reducer />
-            <hr />
-            <Memo />
-            <hr />
-            <Callback />
-            <hr />
-            <LayoutEffect />
-            <hr />
-            <ImperativeHandle />
-            <hr />
-            <DebugValue /> */}
-        </div>
-    );
-}
-
-const rootElement = document.getElementById('root');
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
