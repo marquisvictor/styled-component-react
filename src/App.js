@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import data from './data';
-import List from './List';
+import React from 'react';
+import Review from './Review';
 function App() {
-    const [people, setPeople] = useState(data);
-
     return (
         <main>
             <section className='container'>
-                <h3> {data.length} birthdays today you MF</h3>
-                <List people={people} />
-
-                <button onClick={() => setPeople([])}>Clear all</button>
+                <div className='title'>
+                    <h2>Our Reviews</h2>
+                    <div className='underline'></div>
+                </div>
+                <Review />
             </section>
         </main>
     );
