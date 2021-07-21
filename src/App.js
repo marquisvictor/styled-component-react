@@ -1,69 +1,71 @@
 import React, { useState, useEffect } from 'react';
-import { FaAngleDoubleRight } from 'react-icons/fa';
-// ATTENTION!!!!!!!!!!
-// I SWITCHED TO PERMANENT DOMAIN
-const url = 'https://course-api.com/react-tabs-project';
-function App() {
-    const [loading, setLoading] = useState(true);
-    const [jobs, setJobs] = useState([]);
-    const [value, setValue] = useState(0);
+import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
+import { FaQuoteRight } from 'react-icons/fa';
+import data from './data';
 
-    const fetchjobs = async () => {
-        const response = await fetch(url);
-        const newJobs = await response.json();
-        setJobs(newJobs);
-        setLoading(false);
-    };
+function App() {
+    const [people, setPeople] = useState(data);
+    const [index, setIndex] = useState(0);
 
     useEffect(() => {
-        fetchjobs();
-    }, []);
+        const lastIndex = people.length - 1;
 
-    if (loading) {
-        return (
-            <section className='section loading'>
-                <h1>loading...</h1>
-            </section>
-        );
-    }
+        if (index < 0) {
+            setIndex(lastIndex);
+        }
+        if (index > lastIndex) {
+            setIndex(0);
+        }
+    }, [index, people]);
 
-    const { company, dates, duties, title } = jobs[value];
+    useEffect(() => {
+        let slider = setInterval(() => {
+            setIndex(index + 1);
+        }, 3000);
+        return () => clearInterval(slider);
+    }, [index]);
+
     return (
         <section className='section'>
             <div className='title'>
-                <h2>experience</h2>
-                <div className='underline'></div>
+                <h2>
+                    <span>/</span> Reviews
+                </h2>
             </div>
-            <div className='jobs-center'>
-                <div className='btn-container'>
-                    {jobs.map((job, index) => {
-                        return (
-                            <button
-                                className={`job-btn ${
-                                    index === value && 'active-btn'
-                                }`}
-                                onClick={() => setValue(index)}
-                                key={index}
-                            >
-                                {job.company}
-                            </button>
-                        );
-                    })}
-                </div>
-                <article className='jobs-info'>
-                    <h3>{title}</h3>
-                    <h4>{company}</h4>
-                    <p className='job-date'>{dates}</p>
+            <div className='section-center'>
+                {people.map((person, personIndex) => {
+                    const { id, name, image, title, quote } = person;
+                    let position = 'nextSlide';
+                    if (personIndex === index) {
+                        position = 'activeSlide';
+                    }
+                    if (
+                        personIndex === index - 1 ||
+                        (index === 0 && personIndex === people.length - 1)
+                    ) {
+                        position = 'lastSlide';
+                    }
 
-                    {duties.map((duty, index) => {
-                        return (
-                            <div className='job-desc' key={index}>
-                                <FaAngleDoubleRight />
-                                <p>{duty}</p>
-                            </div>
-                        );
-                    })}
-                </article>
+                    return (
+                        <article className={position} key={personIndex}>
+                            <img
+                                src={image}
+                                alt={name}
+                                className='person-img'
+                            />
+                            <h4>{name}</h4>
+                            <p className='title'>{title}</p>
+                            <p className='text'>{quote}</p>
+                            <FaQuoteRight className='icon' />
+                        </article>
+                    );
+                })}
+                <button onClick={() => setIndex(index - 1)} className='prev'>
+                    <FiChevronLeft />
+                </button>
+                <button onClick={() => setIndex(index + 1)} className='next'>
+                    <FiChevronRight />
+                </button>
             </div>
         </section>
     );
