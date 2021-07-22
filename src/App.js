@@ -23,7 +23,7 @@ function App() {
                     id='amount'
                     onChange={e => setCount(e.target.value)}
                     disabled={parseInt(count) >= data.length - 1}
-                    value={count > 0 ? count : ''}
+                    value={count >= 0 ? count : ''}
                 />
 
                 <button type='submit' className='btn'>
