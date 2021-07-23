@@ -1,42 +1,43 @@
 import React, { useState } from 'react';
-import data from './data';
+import SingleColor from './SingleColor';
+
+import Values from 'values.js';
+
 function App() {
-    const [count, setCount] = useState(0);
-    const [text, setText] = useState([]);
+    const [color, setColor] = useState('');
+    const [error, setError] = useState(false);
+    const [list, setList] = useState([]);
 
-    const handleSumbit = e => {
+    function handleSubmit(e) {
         e.preventDefault();
-        let initial = data.slice(0, count);
 
-        setText(initial);
-    };
+        try {
+            let colors = new Values(color).all(10);
+            console.log(colors);
+        } catch (error) {
+            console.log(error);
+            setError(true);
+        }
+    }
 
     return (
-        <section className='section-center'>
-            <h3>Tired of boring lorem ipsum ?</h3>
+        <>
+            <section className='container'>
+                <h3>Color Generator</h3>
+                <form action='' onSubmit={handleSubmit}>
+                    <input
+                        type='text'
+                        value={color}
+                        onChange={e => setColor(e.target.value)}
+                        placeholder='#f15025'
+                    />
 
-            <form action='' onSubmit={handleSumbit} className='lorem-form'>
-                <label htmlFor='amount'>paragraphs</label>
-                <input
-                    type='number'
-                    name='amount'
-                    id='amount'
-                    onChange={e => setCount(e.target.value)}
-                    disabled={parseInt(count) >= data.length - 1}
-                    value={count >= 0 ? count : ''}
-                />
-
-                <button type='submit' className='btn'>
-                    generate
-                </button>
-            </form>
-
-            <article className='lorem-text'>
-                {text.map((item, index) => {
-                    return <p key={index}>{item}</p>;
-                })}
-            </article>
-        </section>
+                    <button type='submit' className='btn'>
+                        submit
+                    </button>
+                </form>
+            </section>
+        </>
     );
 }
 
