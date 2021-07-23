@@ -1,73 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
-import { FaQuoteRight } from 'react-icons/fa';
-import data from './data';
+import React, { useState } from 'react';
+import SingleColor from './SingleColor';
+
+import Values from 'values.js';
 
 function App() {
-    const [people, setPeople] = useState(data);
-    const [index, setIndex] = useState(0);
+    const [color, setColor] = useState('');
+    const [error, setError] = useState(false);
+    const [list, setList] = useState([]);
 
-    useEffect(() => {
-        const lastIndex = people.length - 1;
+    function handleSubmit(e) {
+        e.preventDefault();
 
-        if (index < 0) {
-            setIndex(lastIndex);
+        try {
+            let colors = new Values(color).all(10);
+            console.log(colors);
+        } catch (error) {
+            console.log(error);
+            setError(true);
         }
-        if (index > lastIndex) {
-            setIndex(0);
-        }
-    }, [index, people]);
-
-    useEffect(() => {
-        let slider = setInterval(() => {
-            setIndex(index + 1);
-        }, 3000);
-        return () => clearInterval(slider);
-    }, [index]);
+    }
 
     return (
-        <section className='section'>
-            <div className='title'>
-                <h2>
-                    <span>/</span> Reviews
-                </h2>
-            </div>
-            <div className='section-center'>
-                {people.map((person, personIndex) => {
-                    const { id, name, image, title, quote } = person;
-                    let position = 'nextSlide';
-                    if (personIndex === index) {
-                        position = 'activeSlide';
-                    }
-                    if (
-                        personIndex === index - 1 ||
-                        (index === 0 && personIndex === people.length - 1)
-                    ) {
-                        position = 'lastSlide';
-                    }
+        <>
+            <section className='container'>
+                <h3>Color Generator</h3>
+                <form action='' onSubmit={handleSubmit}>
+                    <input
+                        type='text'
+                        value={color}
+                        onChange={e => setColor(e.target.value)}
+                        placeholder='#f15025'
+                    />
 
-                    return (
-                        <article className={position} key={personIndex}>
-                            <img
-                                src={image}
-                                alt={name}
-                                className='person-img'
-                            />
-                            <h4>{name}</h4>
-                            <p className='title'>{title}</p>
-                            <p className='text'>{quote}</p>
-                            <FaQuoteRight className='icon' />
-                        </article>
-                    );
-                })}
-                <button onClick={() => setIndex(index - 1)} className='prev'>
-                    <FiChevronLeft />
-                </button>
-                <button onClick={() => setIndex(index + 1)} className='next'>
-                    <FiChevronRight />
-                </button>
-            </div>
-        </section>
+                    <button type='submit' className='btn'>
+                        submit
+                    </button>
+                </form>
+            </section>
+        </>
     );
 }
 
