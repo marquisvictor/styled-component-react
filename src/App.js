@@ -2,9 +2,18 @@ import React, { useState, useEffect } from 'react';
 import List from './List';
 import Alert from './Alert';
 
+const localitem = JSON.parse(localStorage.getItem('item'));
+
+const getLocalStorage = () => {
+    if (localitem) {
+        return JSON.parse(localStorage.getItem('item'));
+    }
+    return [];
+};
+
 function App() {
     const [name, setName] = useState('');
-    const [list, setList] = useState([]);
+    const [list, setList] = useState(getLocalStorage());
     const [isEditing, setIsEditing] = useState(false);
     const [editId, setEditId] = useState(null);
     const [alert, setAlert] = useState({ show: false, msg: '', type: '' });
@@ -18,6 +27,17 @@ function App() {
                 type: 'danger',
             });
         } else if (name && isEditing) {
+            setList(
+                list.map(item => {
+                    if (item.id === editId) {
+                        return { ...item, title: name };
+                    }
+                    return item;
+                }),
+            );
+            setName('');
+            setEditId(null);
+            setIsEditing(false);
             setAlert({
                 show: true,
                 msg: 'value changed successfully',
@@ -33,7 +53,6 @@ function App() {
                 id: new Date().getTime().toString(),
                 title: name,
             };
-            // console.log(List);
             setList([...list, newItems]);
             setName('');
         }
@@ -43,7 +62,7 @@ function App() {
         setAlert({
             show: true,
             msg: 'you don clear am, you don happy ba???',
-            type: 'success',
+            type: 'danger',
         });
         setList('');
     };
@@ -56,19 +75,29 @@ function App() {
         setAlert({
             show: true,
             msg: 'osheyy you don comot am',
-            type: 'success',
+            type: 'danger',
         });
 
         setList(list.filter(listitem => listitem.id !== id));
     };
 
+    const editItem = id => {
+        const specificId = list.find(listItem => listItem.id === id);
+        setIsEditing(true);
+        setEditId(id);
+        setName(specificId.title);
+    };
+
     useEffect(() => {
+        localStorage.setItem('item', JSON.stringify(list));
         const timeout = setTimeout(() => {
-            setAlert({ show: true });
-        }, 2000);
+            setAlert({
+                show: false,
+            });
+        }, 3000);
 
         return () => clearTimeout(timeout);
-    }, [alert]);
+    }, [list]);
 
     return (
         <section className='section-center'>
@@ -90,7 +119,11 @@ function App() {
             </form>
             {list.length > 0 && (
                 <div className='grocery-container'>
-                    <List items={list} removeItem={removeItem} />
+                    <List
+                        items={list}
+                        removeItem={removeItem}
+                        editIcon={editItem}
+                    />
                     <button className='clear-btn' onClick={clearList}>
                         clear items
                     </button>
