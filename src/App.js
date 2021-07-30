@@ -1,15 +1,14 @@
-import React from 'react';
-import Modal from './Modal';
-import Sidebar from './Sidebar';
-import Home from './Home';
+import React from 'react'
+import Navbar from './Navbar'
+import Hero from './Hero'
+import Sidebar from './Sidebar'
+import Submenu from './Submenu'
 function App() {
-    return (
-        <>
-            <Home />
-            <Modal />
-            <Sidebar />
-        </>
-    );
+  return (
+    <>
+      <h2>stripe submenus setup</h2>
+    </>
+  )
 }
 
-export default App;
+export default App
