@@ -6,11 +6,26 @@ import { useGlobalContext } from './context';
 const Navbar = () => {
     const { openSidebar, openSubmenu, closeSubmenu } = useGlobalContext();
 
-    const displaySubmenu = () => {
-        openSubmenu();
+    const displaySubmenu = e => {
+        const page = e.target.textContent;
+        const tempBtn = e.target.getBoundingClientRect();
+
+        const center = (tempBtn.left + tempBtn.right) / 2;
+        const bottom = tempBtn.bottom - 3;
+
+        console.log(page, 'navbar');
+
+        openSubmenu(page, { center, bottom });
     };
+
+    const handleSubmenu = e => {
+        if (!e.target.classList.contains('link-btn')) {
+            closeSubmenu();
+        }
+    };
+
     return (
-        <nav className='nav'>
+        <nav className='nav' onMouseOver={handleSubmenu}>
             <div className='nav-center'>
                 <div className='nav-header'>
                     <img
@@ -28,7 +43,7 @@ const Navbar = () => {
                             onMouseOver={displaySubmenu}
                             className='link-btn'
                         >
-                            Products
+                            products
                         </button>
                     </li>
                     <li>
@@ -36,7 +51,7 @@ const Navbar = () => {
                             onMouseOver={displaySubmenu}
                             className='link-btn'
                         >
-                            Developers
+                            developers
                         </button>
                     </li>
                     <li>
@@ -44,7 +59,7 @@ const Navbar = () => {
                             onMouseOver={displaySubmenu}
                             className='link-btn'
                         >
-                            Company
+                            company
                         </button>
                     </li>
                 </ul>
