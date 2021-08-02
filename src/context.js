@@ -1,54 +1,54 @@
-import React, { useState, useContext } from 'react';
-import sublinks from './data';
-
+import React, { useState, useContext, useReducer, useEffect } from 'react';
+import cartItems from './data';
+import { reducer } from './reducer';
+// ATTENTION!!!!!!!!!!
+// I SWITCHED TO PERMANENT DOMAIN
+const url = 'https://course-api.com/react-useReducer-cart-project';
 const AppContext = React.createContext();
 
-export const AppProvider = ({ children }) => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
-    const [location, setLocation] = useState({});
-    const [page, setPage] = useState({ page: '', links: [] });
+const initialState = {
+    loading: false,
+    cart: cartItems,
+    total: 0,
+    amount: 1,
+};
 
-    const pagerr = sublinks.find(link => link.page === 'products');
-    console.log(pagerr, 'context');
+const AppProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(reducer, initialState);
 
-    const openSidebar = () => {
-        setIsSidebarOpen(true);
+    const clearCart = () => {
+        dispatch({ type: 'CLEAR_CART' });
     };
-    const closeSidebar = () => {
-        setIsSidebarOpen(false);
-    };
-    const openSubmenu = (text, coordinates) => {
-        const page = sublinks.find(link => link.page === text);
 
-        console.log(page);
-
-        setPage(page);
-        setLocation(coordinates);
-        setIsSubmenuOpen(true);
+    const removeItem = id => {
+        dispatch({ type: 'REMOVE_ITEM', payload: id });
     };
-    const closeSubmenu = () => {
-        setIsSubmenuOpen(false);
+
+    const increase = id => {
+        dispatch({ type: 'INCREASE', payload: id });
+    };
+
+    const decrease = id => {
+        dispatch({ type: 'DECREASE', payload: id });
     };
 
     return (
         <AppContext.Provider
             value={{
-                isSidebarOpen,
-                isSubmenuOpen,
-                openSidebar,
-                closeSidebar,
-                openSubmenu,
-                closeSubmenu,
-                location,
-                page,
+                ...state,
+                clearCart,
+                removeItem,
+                increase,
+                decrease,
             }}
         >
             {children}
         </AppContext.Provider>
     );
 };
-
+// make sure use
 export const useGlobalContext = () => {
     return useContext(AppContext);
 };
+
+export { AppContext, AppProvider };
