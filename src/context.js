@@ -10,7 +10,7 @@ const initialState = {
     loading: false,
     cart: cartItems,
     total: 0,
-    amount: 1,
+    amount: 0,
 };
 
 const AppProvider = ({ children }) => {
@@ -32,6 +32,25 @@ const AppProvider = ({ children }) => {
         dispatch({ type: 'DECREASE', payload: id });
     };
 
+    const fetchData = async () => {
+        dispatch({ type: 'LOADING' });
+        const response = await fetch(url);
+        const cart = await response.json();
+        dispatch({ type: 'DISPLAY_ITEMS', payload: cart });
+    };
+
+    const toggle = (id, type) => {
+        dispatch({ type: 'TOGGLE_AMOUNT', payload: { id, type } });
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        dispatch({ type: 'GET_TOTALS' });
+    }, [state.cart]);
+
     return (
         <AppContext.Provider
             value={{
@@ -40,6 +59,7 @@ const AppProvider = ({ children }) => {
                 removeItem,
                 increase,
                 decrease,
+                toggle,
             }}
         >
             {children}
