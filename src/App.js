@@ -1,7 +1,8 @@
 import React from 'react';
+import UserList from './UserList';
 
 const App = () => {
-    return <h1>Hello world</h1>;
+    return <UserList />;
 };
 
 export default App;
